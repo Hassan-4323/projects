@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const login = () => {
+const Login = () => {
 
     // two way binding
     const [email, setEmail] = useState('');
@@ -53,4 +53,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
