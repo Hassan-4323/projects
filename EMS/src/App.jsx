@@ -17,7 +17,7 @@ const App = () => {
     if(email == 'admin@gmail.com' && password == '123'){
       setUser('admin');
     }
-    else if(email == 'user@gmail.com' && password == '123'){
+    else if(authData && authData.employee.find((e)=> email == e.email && e.password == password)){
       setUser('employee');
     }
     else{
