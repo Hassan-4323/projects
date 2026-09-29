@@ -10,7 +10,10 @@ const App = () => {
 
   const [user, setUser] = useState(null);
   const authData = useContext(AuthContext);
-  console.log(authData);
+  
+  useEffect(()=>{
+    const LoggedInUser = localStorage.getItem("LoggedInUser");
+  },[LoggedInUser]);
 
   const handleLogin = (email,password) => {
 
@@ -24,11 +27,6 @@ const App = () => {
       alert("Invalid Credentials");
     }
   }
-
-  // useEffect(() => {
-  //   // setLocalStorage()
-  //   getLoacalStorage()
-  // },)
 
   return (
 
