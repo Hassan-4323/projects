@@ -1,10 +1,16 @@
 const employees = [
   {
     id: 1,
+    firstName: "Hassan",
     email: "employee1@gmail.com",
     password: "123",
+    active: 2,
+    newTask: 1,
+    completed: 1,
+    failed: 1,
     tasks: [
       {
+        taskNumber: 1,
         active: true,
         newTask: true,
         completed: false,
@@ -15,6 +21,7 @@ const employees = [
         category: "Development"
       },
       {
+        taskNumber: 2,
         active: false,
         newTask: false,
         completed: true,
@@ -25,6 +32,7 @@ const employees = [
         category: "Account"
       },
       {
+        taskNumber: 3,
         active: true,
         newTask: false,
         completed: false,
@@ -35,6 +43,7 @@ const employees = [
         category: "Bug Fixing"
       },
       {
+        taskNumber: 4,
         active: false,
         newTask: false,
         completed: false,
@@ -49,10 +58,16 @@ const employees = [
 
   {
     id: 2,
+    firstName: "Ali",
     email: "employee2@gmail.com",
     password: "123",
+    active: 2,
+    newTask: 1,
+    completed: 1,
+    failed: 0,
     tasks: [
       {
+        taskNumber: 1,
         active: true,
         newTask: true,
         completed: false,
@@ -63,6 +78,7 @@ const employees = [
         category: "Design"
       },
       {
+        taskNumber: 2,
         active: true,
         newTask: false,
         completed: false,
@@ -73,6 +89,7 @@ const employees = [
         category: "Frontend"
       },
       {
+        taskNumber: 3,
         active: false,
         newTask: false,
         completed: true,
@@ -87,10 +104,16 @@ const employees = [
 
   {
     id: 3,
+    firstName: "Usman",
     email: "employee3@gmail.com",
     password: "123",
+    active: 3,
+    newTask: 2,
+    completed: 1,
+    failed: 1,
     tasks: [
       {
+        taskNumber: 1,
         active: true,
         newTask: true,
         completed: false,
@@ -101,6 +124,7 @@ const employees = [
         category: "Backend"
       },
       {
+        taskNumber: 2,
         active: false,
         newTask: false,
         completed: true,
@@ -111,6 +135,7 @@ const employees = [
         category: "Database"
       },
       {
+        taskNumber: 3,
         active: true,
         newTask: false,
         completed: false,
@@ -121,6 +146,7 @@ const employees = [
         category: "Testing"
       },
       {
+        taskNumber: 4,
         active: false,
         newTask: false,
         completed: false,
@@ -131,6 +157,7 @@ const employees = [
         category: "Deployment"
       },
       {
+        taskNumber: 5,
         active: true,
         newTask: true,
         completed: false,
@@ -145,10 +172,16 @@ const employees = [
 
   {
     id: 4,
+    firstName: "Bilal",
     email: "employee4@gmail.com",
     password: "123",
+    active: 2,
+    newTask: 1,
+    completed: 1,
+    failed: 1,
     tasks: [
       {
+        taskNumber: 1,
         active: true,
         newTask: true,
         completed: false,
@@ -159,6 +192,7 @@ const employees = [
         category: "Data Entry"
       },
       {
+        taskNumber: 2,
         active: false,
         newTask: false,
         completed: true,
@@ -169,6 +203,7 @@ const employees = [
         category: "Verification"
       },
       {
+        taskNumber: 3,
         active: true,
         newTask: false,
         completed: false,
@@ -179,6 +214,7 @@ const employees = [
         category: "Communication"
       },
       {
+        taskNumber: 4,
         active: false,
         newTask: false,
         completed: false,
@@ -193,10 +229,16 @@ const employees = [
 
   {
     id: 5,
+    firstName: "Hamza",
     email: "employee5@gmail.com",
     password: "123",
+    active: 3,
+    newTask: 2,
+    completed: 2,
+    failed: 1,
     tasks: [
       {
+        taskNumber: 1,
         active: true,
         newTask: true,
         completed: false,
@@ -207,6 +249,7 @@ const employees = [
         category: "Marketing"
       },
       {
+        taskNumber: 2,
         active: true,
         newTask: false,
         completed: false,
@@ -217,6 +260,7 @@ const employees = [
         category: "Research"
       },
       {
+        taskNumber: 3,
         active: false,
         newTask: false,
         completed: true,
@@ -227,6 +271,7 @@ const employees = [
         category: "Presentation"
       },
       {
+        taskNumber: 4,
         active: false,
         newTask: false,
         completed: true,
@@ -237,6 +282,7 @@ const employees = [
         category: "Content"
       },
       {
+        taskNumber: 5,
         active: true,
         newTask: true,
         completed: false,
@@ -247,6 +293,7 @@ const employees = [
         category: "Marketing"
       },
       {
+        taskNumber: 6,
         active: false,
         newTask: false,
         completed: false,
@@ -263,6 +310,7 @@ const employees = [
 const admin = [
   {
     id: 1,
+    firstName: "Ahmed",
     email: "admin@gmail.com",
     password: "123"
   }
@@ -271,11 +319,11 @@ const admin = [
 export const setLocalStorage = () => {
   localStorage.setItem("employees", JSON.stringify(employees));
   localStorage.setItem("admin", JSON.stringify(admin));
-}
+};
 
 export const getLoacalStorage = () => {
-  const employees = JSON.parse(localStorage.getItem('employees'));
-  const admin = JSON.parse(localStorage.getItem('admin'));
+  const employees = JSON.parse(localStorage.getItem("employees"));
+  const admin = JSON.parse(localStorage.getItem("admin"));
 
-  return {employees, admin}
-}
+  return { employees, admin };
+};
