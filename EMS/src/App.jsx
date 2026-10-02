@@ -13,13 +13,14 @@ const App = () => {
   const authData = useContext(AuthContext);
 
   useEffect(() => {
-    if (authData) {
+    
       const loggedInUser = localStorage.getItem("loggedInUser");
       if (loggedInUser) {
-        setUser(loggedInUser.role);
+        const userData = JSON.parse(loggedInUser);
+        setUser(userData.role);
+        setLoggedInUserData(userData.data);
       }
-    }
-  }, [authData]);
+  },[]);
 
   const handleLogin = (email, password) => {
 
