@@ -1,56 +1,94 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const Login = ({ handleLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    // two way binding
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-
-        handleLogin(email, password);
-        setEmail('');
-        setPassword('');
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
     }
 
-    return (
-        <div className='h-screen w-screen flex justify-center items-center bg-black text-white'>
+    const success = handleLogin(email, password);
 
-            <div className='border-2 border-cyan-600 p-20 rounded-xl'>
+    if (!success) {
+      setError("Invalid email or password.");
+      return;
+    }
 
-                <form onSubmit={(e) => {
+    setError("");
+  };
 
-                    submitHandler(e)
+  return (
+    <div className="login-page">
+      <div className="login-background-shape shape-one"></div>
+      <div className="login-background-shape shape-two"></div>
 
-                }} className='flex flex-col justify-center items-center'>
+      <div className="login-card">
+        <div className="login-header">
+          <div className="login-logo">
+            <span>EMS</span>
+          </div>
 
-                    <input
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
-                        required
-                        className='border-2 border-cyan-600 outline-none rounded-full bg-transparent py-3 px-4 text-xl placeholder:text-gray-400' type="email" placeholder='Enter your email'
-                    />
-
-                    <input
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                        required
-                        className='border-2 border-cyan-600 outline-none rounded-full bg-transparent py-3 px-4 mt-3 text-xl placeholder:text-gray-400' type="password" placeholder='Enter your password'
-                    />
-
-                    <button className='border-none bg-cyan-500 text-white outline-none rounded-full py-3 px-4 text-xl mt-5' >Log in</button>
-                </form>
-
-            </div>
-
+          <h1>Welcome Back</h1>
+          <p>Sign in to access your workspace</p>
         </div>
-    )
-}
 
-export default Login
+        <form onSubmit={submitHandler} className="login-form">
+          <div className="input-group">
+            <label>Email Address</label>
+
+            <div className="input-wrapper">
+              <span className="input-icon">✉</span>
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError("");
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label>Password</label>
+
+            <div className="input-wrapper">
+              <span className="input-icon">🔒</span>
+
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError("");
+                }}
+              />
+            </div>
+          </div>
+
+          {error && <div className="login-error">{error}</div>}
+
+          <button type="submit" className="login-button">
+            Sign In
+            <span>→</span>
+          </button>
+        </form>
+
+        <div className="login-footer">
+          <span>Employee Management System</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

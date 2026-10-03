@@ -1,21 +1,41 @@
-import React from 'react'
+import React from "react";
 
-const Header = (props) => {
+const Header = ({ user, handleLogout }) => {
+  const name = user?.firstName || "Admin";
+  const role = user?.role === "admin" ? "Administrator" : "Employee";
 
-    const logOutUser = () => {
-        localStorage.setItem('loggedInUser','');
-        props.changeUser('');
-        window.location.reload()
-    }
-    
-    return (
-        <div className='flex items-end justify-between'>
-
-            <h1 className='font-medium text-2xl'>Hello <br /> <span className='font-semibold text-3xl'>{data.firstName} 👋</span></h1>
-
-            <button onClick={logOutUser} className='bg-red-500 text-lg font-medium text-white px-4 py-2 rounded-sm'>Log Out</button>
+  return (
+    <header className="dashboard-header">
+      <div className="header-left">
+        <div className="header-logo">
+          EMS
         </div>
-    )
-}
 
-export default Header
+        <div className="header-title">
+          <h2>Employee Management</h2>
+          <p>Manage your workspace efficiently</p>
+        </div>
+      </div>
+
+      <div className="header-right">
+        <div className="header-user">
+          <div className="header-avatar">
+            {name.charAt(0).toUpperCase()}
+          </div>
+
+          <div className="header-user-info">
+            <strong>{name}</strong>
+            <span>{role}</span>
+          </div>
+        </div>
+
+        <button onClick={handleLogout} className="logout-button">
+          <span>↪</span>
+          Logout
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

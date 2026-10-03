@@ -1,25 +1,44 @@
-import React from 'react'
+import React from "react";
 
-const CompleteTask = ({data}) => {
+const CompleteTask = ({ task, taskIndex }) => {
   return (
-    <div className='shrink-0 h-full w-75 bg-cyan-700 p-3 rounded-xl'>
+    <article className="task-card task-completed">
+      <div className="task-card-header">
+        <div className="task-category">
+          {task.category || "General"}
+        </div>
 
-      <div className='flex items-center justify-between'>
-        <h3 className='bg-red-600 text-sm px-2 py-1 rounded'>{data.category}</h3>
-        <h4 className='text-sm bg-emerald-900 rounded py-1 px-2'>{data.taskDate}</h4>
+        <div className="task-status status-completed">
+          Completed
+        </div>
       </div>
 
-      <h2 className='mt-4 text-2xl font-semibold'>{data.taskTitle}</h2>
-      <p className='text-sm mt-2'>
-        {data.taskDescription}
-      </p>
+      <div className="task-card-body">
+        <div className="task-date">
+          <span>Completed Task</span>
+          <strong>{task.taskDate || "Completed"}</strong>
+        </div>
 
-      <div className='mt-12'>
-        <button className='w-full bg-green-500 rounded font-medium py-2 px-2 text-xs'>Completed</button>
+        <h3>{task.taskTitle}</h3>
+
+        <p>
+          {task.taskDescription ||
+            "This task has been successfully completed."}
+        </p>
       </div>
 
-    </div>
-  )
-}
+      <div className="task-card-footer">
+        <span className="task-number">
+          Task #{String(taskIndex + 1).padStart(2, "0")}
+        </span>
 
-export default CompleteTask
+        <div className="completed-label">
+          <span>✓</span>
+          Successfully completed
+        </div>
+      </div>
+    </article>
+  );
+};
+
+export default CompleteTask;

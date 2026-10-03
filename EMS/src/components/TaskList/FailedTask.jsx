@@ -1,25 +1,44 @@
-import React from 'react'
+import React from "react";
 
-const FailedTask = ({data}) => {
+const FailedTask = ({ task, taskIndex }) => {
   return (
-    <div className='shrink-0 h-full w-75 bg-yellow-400 p-3 rounded-xl'>
+    <article className="task-card task-failed">
+      <div className="task-card-header">
+        <div className="task-category">
+          {task.category || "General"}
+        </div>
 
-      <div className='flex items-center justify-between'>
-        <h3 className='bg-red-600 text-sm px-2 py-1 rounded'>{data.category}</h3>
-        <h4 className='text-sm bg-emerald-900 rounded py-1 px-2'>{data.taskDate}</h4>
+        <div className="task-status status-failed">
+          Failed
+        </div>
       </div>
 
-      <h2 className='mt-4 text-2xl font-semibold'>{data.taskTitle}</h2>
-      <p className='text-sm mt-2'>
-        {data.taskDescription}
-      </p>
+      <div className="task-card-body">
+        <div className="task-date">
+          <span>Task Date</span>
+          <strong>{task.taskDate || "No date"}</strong>
+        </div>
 
-      <div className='mt-2'>
-        <button className='w-full bg-green-500 rounded font-medium py-2 px-2 text-xs'>Failed</button>
+        <h3>{task.taskTitle}</h3>
+
+        <p>
+          {task.taskDescription ||
+            "This task was marked as failed."}
+        </p>
       </div>
 
-    </div>
-  )
-}
+      <div className="task-card-footer">
+        <span className="task-number">
+          Task #{String(taskIndex + 1).padStart(2, "0")}
+        </span>
 
-export default FailedTask
+        <div className="failed-label">
+          <span>!</span>
+          Task not completed
+        </div>
+      </div>
+    </article>
+  );
+};
+
+export default FailedTask;

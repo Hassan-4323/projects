@@ -1,39 +1,79 @@
-import React from 'react'
+import React from "react";
 
-const TaskListNumbers = ({data}) => {
-    return (
-        <div className='flex screen mt-7 justify-between gap-5'>
+const TaskListNumbers = ({ tasks = [] }) => {
+  const newTasks = tasks.filter((task) => task.newTask).length;
 
-            <div className='rounded-xl py-4 px-7 w-[45%] bg-red-300'>
+  const activeTasks = tasks.filter((task) => task.active).length;
 
-                <h2 className='text-3xl font-semibold'>{data.newTask}</h2>
-                <h3 className='text-xl font-medium'>New Task</h3>
+  const completedTasks = tasks.filter(
+    (task) => task.completed
+  ).length;
 
+  const failedTasks = tasks.filter(
+    (task) => task.failed
+  ).length;
+
+  const cards = [
+    {
+      label: "New Tasks",
+      value: newTasks,
+      icon: "✦",
+      className: "new-stat",
+    },
+    {
+      label: "Active Tasks",
+      value: activeTasks,
+      icon: "↗",
+      className: "active-stat",
+    },
+    {
+      label: "Completed",
+      value: completedTasks,
+      icon: "✓",
+      className: "completed-stat",
+    },
+    {
+      label: "Failed",
+      value: failedTasks,
+      icon: "!",
+      className: "failed-stat",
+    },
+  ];
+
+  return (
+    <div className="employee-stats-grid">
+      {cards.map((card) => (
+        <div
+          className={`employee-stat-card ${card.className}`}
+          key={card.label}
+        >
+          <div className="employee-stat-top">
+            <div className="employee-stat-icon">
+              {card.icon}
             </div>
 
-            <div className='rounded-xl py-4 px-7 w-[45%] bg-cyan-300'>
+            <span>{card.label}</span>
+          </div>
 
-                <h2 className='text-3xl font-semibold'>{data.completed}</h2>
-                <h3 className='text-xl font-medium'>Completed Task</h3>
+          <strong>{card.value}</strong>
 
-            </div>
-
-            <div className='rounded-xl py-4 px-7 w-[45%] bg-amber-600'>
-
-                <h2 className='text-3xl font-semibold'>{data.active}</h2>
-                <h3 className='text-xl font-medium'>Active Task</h3>
-
-            </div>
-
-            <div className='rounded-xl py-4 px-7 w-[45%] bg-blue-400'>
-
-                <h2 className='text-3xl font-semibold'>{data.failed}</h2>
-                <h3 className='text-xl font-medium'>Failed Task</h3>
-
-            </div>
-
+          <div className="stat-progress">
+            <span
+              style={{
+                width:
+                  tasks.length > 0
+                    ? `${Math.min(
+                        (card.value / tasks.length) * 100,
+                        100
+                      )}%`
+                    : "0%",
+              }}
+            ></span>
+          </div>
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
 
-export default TaskListNumbers
+export default TaskListNumbers;

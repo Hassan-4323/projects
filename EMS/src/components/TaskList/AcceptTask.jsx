@@ -1,26 +1,60 @@
-import React from 'react'
+import React from "react";
 
-const AcceptTask = ({data}) => {
+const AcceptTask = ({
+  task,
+  taskIndex,
+  onComplete,
+  onFail,
+}) => {
   return (
-    <div className='shrink-0 h-full w-75 bg-amber-900 p-3 rounded-xl'>
+    <article className="task-card task-active">
+      <div className="task-card-header">
+        <div className="task-category">
+          {task.category || "General"}
+        </div>
 
-      <div className='flex items-center justify-between'>
-        <h3 className='bg-red-600 text-sm px-2 py-1 rounded'>{data.category}</h3>
-        <h4 className='text-sm bg-emerald-900 rounded py-1 px-2'>{data.taskDate}</h4>
+        <div className="task-status status-active">
+          In Progress
+        </div>
       </div>
 
-      <h2 className='mt-4 text-2xl font-semibold'>{data.taskTitle}</h2>
-      <p className='text-sm mt-2'>
-        {data.taskDescription}
-      </p>
+      <div className="task-card-body">
+        <div className="task-date">
+          <span>Deadline</span>
+          <strong>{task.taskDate || "No deadline"}</strong>
+        </div>
 
-      <div className='flex justify-between mt-4'>
-        <button className='bg-green-500 py-1 px-2 text-sm rounded font-medium'>Mark As Completed</button>
-        <button className='bg-red-500 py-1 px-2 text-sm rounded font-medium'>Mark As Failed</button>
+        <h3>{task.taskTitle}</h3>
+
+        <p>
+          {task.taskDescription ||
+            "No description provided for this task."}
+        </p>
       </div>
 
-    </div>
-  )
-}
+      <div className="task-card-footer">
+        <span className="task-number">
+          Task #{String(taskIndex + 1).padStart(2, "0")}
+        </span>
 
-export default AcceptTask
+        <div className="task-actions">
+          <button
+            className="task-action-button complete-button"
+            onClick={() => onComplete(taskIndex)}
+          >
+            Complete
+          </button>
+
+          <button
+            className="task-action-button fail-button"
+            onClick={() => onFail(taskIndex)}
+          >
+            Mark Failed
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+export default AcceptTask;
