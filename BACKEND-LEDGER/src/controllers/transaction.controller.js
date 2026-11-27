@@ -2,6 +2,7 @@ const transactionModel = require("../models/transaction.model");
 const ledgerModel = require("../models/ledger.model");
 const accountModel = require("../models/account.model");
 const emailService = require("../services/email.service");
+const mongoose = require('mongoose');
 
 /**
  * - Create new transaction
@@ -103,4 +104,83 @@ async function createTransaction(req, res) {
         message : `Insufficient balance. Current balance is ${balance}. Requested balance is ${amount}`
     })
   }
+
+  /**
+   * Create Transaction (PENDING)
+   */
+
+  const session = await mongoose.startSession();
+  // This part is provided by the mongoDB means ya to step 5 to step 8 sub complete hongy ya aik bi nahi
+  session.startTransaction();
+
+  const transaction = await transactionModel.create({
+    fromAccount,
+    toAccount,
+    amount,
+    idempotencykey,
+    status : PENDING
+  }, {session})
+
+  const debitLedgerEntry = await ledgerModel.create({
+    account : fromAccount,
+    amount : amount,
+    transaction : transaction._id,
+    type : "DEBIT"
+  },{session})
+
+  const creditLedgerEntry = await ledgerModel.create({
+    account : "CREDIT",
+    amount : amount,
+    transaction : transaction._id,
+    type : "CREDIT"
+  },{session})
+
+  transaction.status = "COMPLETED"
+  await transaction.save({session})
+
+  await session.commitTransaction()
+  session.endSession()
+
+  /**
+   * 10 - Send email Notificaiton
+   */
+
+  await emailService.sendTransactionEmail(req.user.email, req.user.name, amount, toAccount)
+
+  res.status(201).json({
+    message : "Transaction completed successfully",
+    transaction : transaction
+  })
+
 }
+
+async function createInitialFundsTransaction(req,res){
+  const {toAccount, amount, idemPotencyKey} = req.body
+
+  if(!toAccount || !amount || !idemPotencyKey){
+    return res.status(400).json({
+      message : "toAccount, amount and idemPotencyKey are required"
+    })
+
+    const toUserAccount = await accountModel.findOne({
+      _id : toAccount
+    })
+
+    if(!toUserAccount){
+      return res.status(400).json({
+      message : "Invalid toAccount"
+    })
+  }
+const fromUserAccount = await accountModel.findOne({
+      systemUser : true,
+      user : req.user._id
+    })
+
+    if(!fromUserAccount){
+      return res.status(400).json({
+      message : "System user not found"
+    })
+  }
+}
+
+module.exports = {createTransaction}
